@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+
+
+	<div th:fragment="footer">
+
+		<form method="post" th:action="@{/logout}">
+			<input type="submit" value="Logout" />
+		</form>
+		<span id="footer-copyright" style="font-size:10pt;">Copyright &copy; Manpreet Kaur</span>
+	</div>
+</body>
+
+</html>

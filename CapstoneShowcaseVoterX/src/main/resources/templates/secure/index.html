@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+
+	<style>
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+		}
+
+		th,
+		td {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+
+		tr:nth-child(even) {
+			background-color: #f9f9f9;
+		}
+
+
+
+		tr:hover {
+			background-color: #f5f5f5;
+		}
+	</style>
+</head>
+
+<body>
+
+	<!DOCTYPE html>
+	<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Appointment System</title>
+		<!-- Include any additional styles or scripts here -->
+	</head>
+
+	<body>
+
+		<header th:insert="~{fragments/header.html :: header}"></header>
+
+		<div th:replace="${admin} ? ~{fragments/menu.html :: div.menu-admin} : ~{fragments/menu.html :: div.menu}">
+		</div>
+
+		<h3>Capstone Showcase</h3>
+
+		<table th:if="${projectList != null and not projectList.empty}">
+			<tr>
+				<th>Project Name</th>
+				<th>Video Link</th>
+				<th>Team Name</th>
+				<th>Project Description</th>
+				<th>Total Votes</th>
+				<th>Vote Up</th>
+				<th>Vote Down</th>
+				<th>Delete Project</th>
+
+			</tr>
+			<tr th:each="project: ${projectList}">
+				<td th:text="${project.projectName}">Project Name</td>
+				<td th:text="${project.videoLink}">Video Link</td>
+				<td th:text="${project.teamName}">Team Name</td>
+				<td th:text="${project.projectDescription}">Project Description</td>
+				<td th:text="${project.votes}">Total Votes</td>
+				<td><a th:href="@{/voteUp/}+${project.id}">Vote Up</a></td>
+				<td><a th:href="@{/voteDown/}+${project.id}">Vote Down</a></td>
+				<td><a th:href="@{/deleteProjectById/}+${project.id}">Delete Project</a></td>
+
+			</tr>
+		</table>
+
+		<hr>
+
+		<h2>Add New Project</h2>
+
+		<form method="post" th:action="@{/insertProject}" th:object="${project}">
+			<input type="hidden" id="id" name="id" th:field="*{id}" />
+			Project Name: <input type="text" th:field="*{projectName}" /><br><br>
+			Video Link: <input type="text" th:field="*{videoLink}" /><br><br>
+			Team Name: <input type="text" th:field="*{teamName}" /><br><br>
+			Project Description: <textarea th:field="*{projectDescription}" /><br><br>
+			<!-- Hidden input field for votes with default value of 0 -->
+			<input type="hidden" id="votes"  th:field="*{votes}" name="votes" value="0" />
+			<input type="submit" value="Add Project" />
+		</form>
+		<br><br>
+		<hr>
+		<br><br>
+		<footer th:replace="fragments/footer.html :: footer"></footer>
+
+	</body>
+
+	</html>
+
+</body>
+
+</html>
